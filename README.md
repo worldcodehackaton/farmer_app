@@ -29,3 +29,4 @@
 3. Написать команды в консоль: 
 flutter pub get
 flutter pub run build_runner watch --delete-conflicting-outputs
+4. Открыть любой .dart файл проекта, запустить эмулятор или подключить под usb андроид устройство и нажать F5

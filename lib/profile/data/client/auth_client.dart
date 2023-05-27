@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_farmer_app/profile/domain/models/register_result.dart';
 
 class AuthClient {
   AuthClient(
@@ -7,7 +8,33 @@ class AuthClient {
 
   final Dio _dio;
 
-  Future<void> registerUser(String email, String password) => _dio.post('');
+  Future<RegisterResult> registerUser(
+    String name,
+    String email,
+    String password,
+  ) async {
+    final response = await _dio.post(
+      '/api/register',
+      data: {
+        'name': name,
+        'email': email,
+        'password': password,
+        'password_confirmation': password,
+      },
+    );
 
-  Future<void> loginUser(String email, String password) => _dio.post('');
+    return RegisterResult.fromJson(response.data);
+  }
+
+  Future<RegisterResult> loginUser(String email, String password) async {
+    final response = await _dio.post(
+      '/api/login',
+      data: {
+        'email': email,
+        'password': password,
+      },
+    );
+
+    return RegisterResult.fromJson(response.data);
+  }
 }

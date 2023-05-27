@@ -44,6 +44,7 @@ class _RootPageState extends State<RootPage> {
           controller: controller,
           itemCount: _pages.length,
           onPageChanged: (page) => _onChanged(page),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, position) => _pages[selectedIndex],
         ),
         bottomNavigationBar: BottomNavBar(

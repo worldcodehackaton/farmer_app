@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 const _connectionTimeout = Duration(seconds: 15);
 const _receiveTimeout = Duration(seconds: 14);
 
-const host = '';
+const host = 'https://foobarbaz.ru/';
 
 void setupDioDependency() {
   GetIt.instance.registerSingleton(

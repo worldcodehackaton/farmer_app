@@ -113,6 +113,7 @@ class _FarmerPageState extends State<FarmerPage> {
       );
 
   PreferredSizeWidget _buildAppBar() => AppBar(
+        backgroundColor: greenColor,
         leading: IconButton(
           onPressed: () {},
           splashRadius: 25,

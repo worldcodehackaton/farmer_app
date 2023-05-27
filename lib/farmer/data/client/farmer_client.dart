@@ -1,15 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_farmer_app/farmer/domain/models/product.dart';
 
 class FarmerClient {
   FarmerClient(
-    this.dio,
+    this._dio,
   );
 
-  Dio dio;
+  final Dio _dio;
 
-  Future<void> fetchAllFarmers() async {
-    final result = await dio.get('');
+  Future<void> fetchFarmers() async {
+    final response = await _dio.get('api/store/');
 
-    return result.data;
+    return response.data;
+  }
+
+  Future<List<Product>> fetchFarmerProducs() async {
+    final response = await _dio.get('api/product/');
+    final products = Products.fromJson(response.data);
+    return products.data;
   }
 }

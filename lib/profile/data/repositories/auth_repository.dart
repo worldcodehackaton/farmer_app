@@ -1,5 +1,17 @@
-abstract class AuthRepository {
-  Future<void> registerUser(String email, String password);
+import 'package:flutter_farmer_app/common/result.dart';
+import 'package:flutter_farmer_app/profile/domain/models/register_result.dart';
 
-  Future<void> loginUser(String email, String password);
+abstract class AuthRepository {
+  Future<Result<RegisterResult?>> registerUser(
+    String name,
+    String email,
+    String password,
+  );
+
+  Future<Result<RegisterResult>> loginUser(
+    String email,
+    String password,
+  );
+
+  // String? get token;
 }

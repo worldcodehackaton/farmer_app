@@ -16,7 +16,7 @@ const _fastAnimation = MapAnimation(
   duration: 0.5,
 );
 
-const _centerGroznyCoords = Point(
+const centerGroznyCoords = Point(
   latitude: 43.312,
   longitude: 45.6889,
 );
@@ -46,8 +46,8 @@ abstract class _MapStateBase with Store {
         position: CameraPosition(
           zoom: currentZoom,
           target: Point(
-            latitude: point?.latitude ?? _centerGroznyCoords.latitude,
-            longitude: point?.longitude ?? _centerGroznyCoords.longitude,
+            latitude: point?.latitude ?? centerGroznyCoords.latitude,
+            longitude: point?.longitude ?? centerGroznyCoords.longitude,
           ),
         ),
       );

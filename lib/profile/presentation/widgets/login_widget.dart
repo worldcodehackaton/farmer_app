@@ -1,20 +1,28 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_farmer_app/colors.dart';
+import 'package:flutter_farmer_app/profile/domain/states/auth_state.dart';
+import 'package:provider/provider.dart';
 
-class RegistrationWidget extends StatefulWidget {
-  const RegistrationWidget({
+class LoginWidget extends StatefulWidget {
+  const LoginWidget({
     super.key,
   });
 
   @override
-  _RegistrationWidgetState createState() => _RegistrationWidgetState();
+  State<LoginWidget> createState() => _LoginWidgetState();
 }
 
-class _RegistrationWidgetState extends State<RegistrationWidget> {
+class _LoginWidgetState extends State<LoginWidget> {
+  late final AuthState _authState;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    _authState = context.read<AuthState>();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -23,16 +31,23 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
     super.dispose();
   }
 
-  void _register() {
-    String email = _emailController.text;
+  Future<void> _register() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
 
-    _emailController.clear();
+    await _authState.loginUser(
+      email,
+      password,
+    );
+
+    if (!mounted || _authState.isFailed) {
+      return;
+    }
 
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Успешная регистрация'),
-        content: Text('Пользователь с email $email успешно зарегистрирован.'),
+        title: const Text('Успешная авторизация'),
         actions: [
           TextButton(
             onPressed: Navigator.of(context).pop,
@@ -48,18 +63,25 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Пароль',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
               obscureText: true,
             ),
@@ -73,7 +95,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                   style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(greenColor),
                   ),
-                  child: const Text('Зарегистрироваться'),
+                  child: const Text('Войти'),
                 ),
               ),
             ),
